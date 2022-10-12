@@ -150,10 +150,8 @@ int main() {
     // 只计算 Transmittance 并将结果保存为二维的贴图
     for (int i = 0; i < TRANSMITTANCE_TEXTURE_HEIGHT; i++) {
         for (int j = 0; j < TRANSMITTANCE_TEXTURE_WIDTH; j++) {
-            Vec2d UV = {
-                static_cast<double>(j) / static_cast<double>(TRANSMITTANCE_TEXTURE_WIDTH),
-                static_cast<double>(i) / static_cast<double>(TRANSMITTANCE_TEXTURE_HEIGHT)};
-            Vec3d trans = ComputeTransmittanceToTopAtmosphereBoundaryTexture(ATMOSPHERE, UV);
+            const Vec2d UV = { static_cast<double>(j), static_cast<double>(i) };
+            const Vec3d trans = ComputeTransmittanceToTopAtmosphereBoundaryTexture(ATMOSPHERE, UV);
             //std::cout << trans.x << " " << trans.y << " " << trans.z << std::endl;
             data[(i * TRANSMITTANCE_TEXTURE_WIDTH + j) * 3 + 0] = uint8_t(trans.x * 255.0);
             data[(i * TRANSMITTANCE_TEXTURE_WIDTH + j) * 3 + 1] = uint8_t(trans.y * 255.0);
