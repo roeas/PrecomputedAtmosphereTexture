@@ -1,0 +1,26 @@
+name: win64_vs2022
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Make project
+      run: ${{github.workspace}}/build.bat
+
+    - name: Build Debugx64
+      run: msbuild ${{github.workspace}}/lut_gen.sln /p:Configuration=Debug /p:Platform=x64
+      
+    - name: Build Releasex64
+      run: msbuild ${{github.workspace}}/lut_gen.sln /p:Configuration=Release /p:Platform=x64
