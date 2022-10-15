@@ -1,7 +1,4 @@
-#include <cassert>
 #include "model.h"
-#include "constants.h"
-#include <iostream>
 
 // 使用目标波长（wavelength）在所有波长（wavelengths）中匹配对应的数据（wavelength_function）
 // TODO：太麻烦了，我们只用RGB，回头得把这套光谱渲染剔除掉

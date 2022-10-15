@@ -1,13 +1,12 @@
-#include <iostream>
 #include <vector>
 #include <cmath>
 #include <fstream>
 
-#include "functions.h"
-#include "model.h"
+#include "functions/functions.h"
+#include "atmosphereParameters/model.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
+#include "stb/stb_image_write.h"
 
 constexpr double kEpsilon = 1e-3;
 constexpr SpectralIrradiance kSolarIrradiance = 123.0 * watt_per_square_meter_per_nm;
@@ -117,11 +116,10 @@ void InitModel() {
 
 uint8_t data[TRANSMITTANCE_TEXTURE_WIDTH * TRANSMITTANCE_TEXTURE_HEIGHT * 3];
 
-int main() {
+int main(int argc, char **argv) {
     // 初始化 Model 并打印 AtmosphereParameters 的初始化参数
     InitModel();
 
-    // 只计算 Transmittance 的话没有用到所有参数
     const AtmosphereParameters ATMOSPHERE = AtmosphereParameters{
         Vec3d(1.500000, 1.500000, 1.500000),
         0.004675,
@@ -159,7 +157,9 @@ int main() {
         }
     }
     //stbi_flip_vertically_on_write(true);
-    stbi_write_png("LUT.png", TRANSMITTANCE_TEXTURE_WIDTH, TRANSMITTANCE_TEXTURE_HEIGHT, 3, data, TRANSMITTANCE_TEXTURE_WIDTH * 3);
+    std::string outPutPath(argv[1]);
+    outPutPath += "/LUT.png";
+    stbi_write_png(outPutPath.c_str(), TRANSMITTANCE_TEXTURE_WIDTH, TRANSMITTANCE_TEXTURE_HEIGHT, 3, data, TRANSMITTANCE_TEXTURE_WIDTH * 3);
 
 	return 0;
 }

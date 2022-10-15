@@ -1,10 +1,13 @@
 #pragma once
 
 #include <array>
+#include <cassert>
 #include <functional>
+#include <iostream>
 #include <string>
 #include <vector>
-#include "definitions.h"
+#include "atmosphereParameters/definitions.h"
+#include "atmosphereParameters/constants.h"
 
 // 在当前的实现中，该类仅仅是为了获得用于初始化 AtmosphereParameters 的正确参数
 class Model {

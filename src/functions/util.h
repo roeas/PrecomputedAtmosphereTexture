@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cassert>
-#include "definitions.h"
 
 #define IN(x) const x&
 #define OUT(x) x&

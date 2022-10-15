@@ -1,6 +1,7 @@
 #pragma once
 
-#include "constants.h"
+#include "atmosphereParameters/constants.h"
+#include "atmosphereParameters/definitions.h"
 #include "util.h"
 
 // 距离大气顶部的距离
