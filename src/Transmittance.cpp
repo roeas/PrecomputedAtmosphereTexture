@@ -114,7 +114,7 @@ void InitModel() {
     model.PrintAtmParameter();
 }
 
-uint8_t data[TRANSMITTANCE_TEXTURE_WIDTH * TRANSMITTANCE_TEXTURE_HEIGHT * 3];
+float data[TRANSMITTANCE_TEXTURE_WIDTH * TRANSMITTANCE_TEXTURE_HEIGHT * 3];
 
 int main(int argc, char **argv) {
     // 初始化 Model 并打印 AtmosphereParameters 的初始化参数
@@ -151,15 +151,16 @@ int main(int argc, char **argv) {
             const Vec2d UV = { static_cast<double>(j), static_cast<double>(i) };
             const Vec3d trans = ComputeTransmittanceToTopAtmosphereBoundaryTexture(ATMOSPHERE, UV);
             //std::cout << trans.x << " " << trans.y << " " << trans.z << std::endl;
-            data[(i * TRANSMITTANCE_TEXTURE_WIDTH + j) * 3 + 0] = uint8_t(trans.x * 255.0);
-            data[(i * TRANSMITTANCE_TEXTURE_WIDTH + j) * 3 + 1] = uint8_t(trans.y * 255.0);
-            data[(i * TRANSMITTANCE_TEXTURE_WIDTH + j) * 3 + 2] = uint8_t(trans.z * 255.0);
+            const int pixelIndex = i * TRANSMITTANCE_TEXTURE_WIDTH + j;
+            data[pixelIndex * 3 + 0] = static_cast<float>(trans.x);
+            data[pixelIndex * 3 + 1] = static_cast<float>(trans.y);
+            data[pixelIndex * 3 + 2] = static_cast<float>(trans.z);
         }
     }
     //stbi_flip_vertically_on_write(true);
     std::string outPutPath(argv[1]);
-    outPutPath += "/LUT.png";
-    stbi_write_png(outPutPath.c_str(), TRANSMITTANCE_TEXTURE_WIDTH, TRANSMITTANCE_TEXTURE_HEIGHT, 3, data, TRANSMITTANCE_TEXTURE_WIDTH * 3);
+    outPutPath += "/LUT.hdr";
+    stbi_write_hdr(outPutPath.c_str(), TRANSMITTANCE_TEXTURE_WIDTH, TRANSMITTANCE_TEXTURE_HEIGHT, 3, data);
 
 	return 0;
 }
