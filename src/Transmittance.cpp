@@ -111,6 +111,7 @@ void InitModel() {
         ozone_density, absorption_extinction, ground_albedo, max_sun_zenith_angle,
         kLengthUnitInMeters, 3,
         false, false);
+
     model.PrintAtmParameter();
 }
 
@@ -162,7 +163,7 @@ int main(int argc, char **argv) {
     outPutPath += "/LUT.hdr";
     stbi_write_hdr(outPutPath.c_str(), TRANSMITTANCE_TEXTURE_WIDTH, TRANSMITTANCE_TEXTURE_HEIGHT, 3, data);
 
-	return 0;
+    return 0;
 }
 
 /*
